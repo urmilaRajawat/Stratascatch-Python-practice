@@ -1,0 +1,13 @@
+QUESTION LINK:
+https://platform.stratascratch.com/coding/9898-unique-salaries?code_type=2
+
+SOLUTION (python) :
+import pandas as pd
+
+twitter_employee["sal_rnk"]= twitter_employee.groupby(["department"])["salary"].rank(ascending = False, method = "dense")
+
+dept_sal = twitter_employee[["department","salary", "sal_rnk"]]
+
+dept_sal = dept_sal.loc[dept_sal["sal_rnk"]<4].sort_values(["department","salary"], ascending=[True,False]).drop_duplicates()
+
+dept_sal.drop("sal_rnk",axis=1)
