@@ -1,0 +1,8 @@
+QUESTION LINK:https://platform.stratascratch.com/coding/10310-class-performance?code_type=2
+
+SOLUTION (python) :
+import pandas as pd
+
+box_scores['total_score'] = (box_scores['assignment1']+box_scores['assignment2']+box_scores['assignment3'])
+
+difference = (box_scores['total_score'].max() - box_scores['total_score'].min())

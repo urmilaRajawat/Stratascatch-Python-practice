@@ -1,0 +1,15 @@
+QUESTION LINK:
+https://platform.stratascratch.com/coding/10297-comments-distribution?code_type=2
+
+SOLUTION (python) :
+import pandas as pd
+
+user_comments = pd.merge(fb_users, fb_comments, how='inner', left_on=['id'], right_on=['user_id'])
+user_comments = user_comments[user_comments['created_at'] >= user_comments['joined_at']]
+user_comments = user_comments[user_comments['joined_at'] >= '01-01-2018']
+user_comments['created_yr_mnth'] = user_comments['created_at'].dt.strftime('%Y-%m')
+df = user_comments[(user_comments['created_yr_mnth'] == '2020-01')]
+
+df2 = df.groupby('id')['user_id'].count().reset_index(name='comment_cnt')
+result = df2.groupby('comment_cnt')['id'].count().reset_index(name='user_cnt').sort_values('comment_cnt', ascending=True)
+
