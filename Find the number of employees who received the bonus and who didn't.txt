@@ -1,0 +1,9 @@
+QUESTION LINK:
+https://platform.stratascratch.com/coding/10081-find-the-number-of-employees-who-received-the-bonus-and-who-didnt?code_type=2
+
+SOLUTION (python) :
+import pandas as pd
+
+merged_df = pd.merge(employee,bonus,left_on='id',right_on='worker_ref_id',how='left')
+merged_df['has_bonus'] = (merged_df.bonus_date.notnull()).astype(int)
+result = merged_df.groupby(['has_bonus'])['id'].nunique()
