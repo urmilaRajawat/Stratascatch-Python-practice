@@ -1,0 +1,9 @@
+QUESTION LINK:
+https://platform.stratascratch.com/coding/9986-find-the-top-5-least-paid-employees-for-each-job-title/official-solution?code_type=2
+
+SOLUTION (python) :
+import pandas as pd
+
+sf_public_salaries['salary_rank'] = sf_public_salaries.groupby('jobtitle')['totalpaybenefits'].rank(method='dense')
+low_paid = sf_public_salaries[sf_public_salaries['salary_rank'] <= 5]
+result = low_paid[['employeename', 'jobtitle', 'totalpaybenefits']].sort_values(['jobtitle', 'totalpaybenefits'], ascending=[True, True])

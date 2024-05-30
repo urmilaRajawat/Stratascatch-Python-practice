@@ -1,0 +1,9 @@
+QUESTION LINK:
+https://platform.stratascratch.com/coding/10299-finding-updated-records/official-solution?code_type=2
+
+SOLUTION (python) :
+import numpy as np
+
+df = ms_employee_salary
+
+df.groupby(["id","first_name","last_name","department_id"])["salary"].max()

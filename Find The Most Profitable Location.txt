@@ -1,0 +1,13 @@
+QUESTION LINK:
+https://platform.stratascratch.com/coding/2033-find-the-most-profitable-location/official-solution?code_type=2
+
+SOLUTION (python) :
+import pandas as pd
+
+result = pd.merge(transactions, signups, how='left', on='signup_id')
+df1 = result.groupby('location')['amt'].mean().to_frame('mean_revenue')
+signups['signup_duration'] = (signups['signup_stop_date'] - signups['signup_start_date']).astype('timedelta64[D]')
+df2 = signups.groupby('location')['signup_duration'].mean().to_frame('mean_duration')
+result = pd.merge(df2, df1, how='left', left_index=True, right_index=True).reset_index()
+result['ratio']=result['mean_revenue'] / result['mean_duration']
+result = result.sort_values(by='ratio', ascending=False)
