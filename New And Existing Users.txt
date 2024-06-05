@@ -1,0 +1,14 @@
+QUESTION LINK:
+https://platform.stratascratch.com/coding/2028-new-and-existing-users?code_type=2
+SOLUTION (python) :
+import pandas as pd
+import datetime as dt 
+
+result = fact_events.groupby(pd.to_datetime(fact_events['time_id']).dt.month)['user_id'].nunique().to_frame('n_users')
+df1 = fact_events.groupby('user_id')['time_id'].min().to_frame('month_min').reset_index()
+df1['month_min'] = pd.to_datetime(df1['month_min']).dt.month
+df1 = df1.groupby('month_min')['user_id'].nunique().to_frame('n_new_users')
+result = result.join(df1)
+result['share_of_new_users'] = result['n_new_users'] /  result['n_users']
+result['share_of_old_users'] = 1 - result['share_of_new_users']
+result = result[['share_of_new_users', 'share_of_old_users']].reset_index()
